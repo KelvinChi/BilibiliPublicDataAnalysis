@@ -7,25 +7,27 @@
 本项目基于Bilibili的分开信息，实现需求的主要模块为[Flink](https://flink.apache.org/) + [eCharts](https://www.echartsjs.com/zh/option.html)，点击直达官网。
 项目代码主要是Scala + Python实现，建议学习大数据的最好掌握Java或Scala，资料丰富些。
 
+[GitHub地址](https://github.com/KelvinChi/BilibiliPublicDataAnalysis)
+
 ### 项目架构
 
 一图胜千言
 
-![项目流程](https://s2.ax1x.com/2020/01/08/lRpgIK.png)
+![项目流程](https://upload-images.jianshu.io/upload_images/2083763-453b33fcacaa685f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 静态图表
 来看看效果，先上个静态的，这个简单需求完全可以不用框架实现，但我还是用了Flink，也好让初学这个框架的盆友适应一小步。
 
-![弹幕时间分布](https://s2.ax1x.com/2020/01/08/l2HjFs.png)
+![弹幕时间分布](https://upload-images.jianshu.io/upload_images/2083763-1a6995aa46791004.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 动态图表
 - 需求一：弹幕在视频时间线上分布情况
 
-![弹幕散点](https://s2.ax1x.com/2020/01/08/l2qFjf.gif)
+![弹幕散点](https://upload-images.jianshu.io/upload_images/2083763-b07565373b95000f.gif?imageMogr2/auto-orient/strip)
 
 - 需求二：视频净观看量、设定时间段内增量及增长率动态统计
 
-![观看量增长](https://s2.ax1x.com/2020/01/08/l2qigP.gif)
+![观看量增长](https://upload-images.jianshu.io/upload_images/2083763-8d3d09d097da6dba.gif?imageMogr2/auto-orient/strip)
 
 *为了调度代码我把时间设置得非常小，实际使用应该以小时计*
 
