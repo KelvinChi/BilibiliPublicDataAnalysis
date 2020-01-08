@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Awesome-pyecharts</title>
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+
+</head>
+<body>
+<!-- 长宽只能在这里设置 -->
+<div id="bar" style="width:1200px; height:700px;"></div>
+<script>
+    var chart = echarts.init(document.getElementById('bar'), 'white', {renderer: 'canvas'});
+    var option = {};
+    $(
+            function () {
+                fetchData(chart);
+                setInterval(getDynamicData, 1000);
+            }
+    );
+
+    function fetchData() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:5000/dynamicData",
+            dataType: "json",
+            success: function (result) {
+                option = {
+                    title: {
+                        text: result.title,
+                        subtext: result.subtitle
+                    },
+                    legend: {
+                        show: true,
+//                        top: '3%',
+                        data: result.name
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            dataView: {readOnly: false},
+                            magicType: {type: ['bar', 'line', 'stack', 'tiled']},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: true,
+                        data: result.time
+                    },
+                    yAxis: {
+                        type: 'value',
+                        boundaryGap: true,
+                        splitLine: {
+                            show: true,
+                            interval: 'auto'
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross',
+                            label: {
+                                backgroundColor: '#283b56'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: result.name[0],
+                        type: result.type,
+                        smooth: true,
+                        smoothMonotone: 'x',
+                        data: result.init_y_list_0
+                    }, {
+                        name: result.name[1],
+                        type: result.type,
+                        smooth: true,
+                        smoothMonotone: 'x',
+                        data: result.init_y_list_1
+                    }, {
+                        name: result.name[2],
+                        type: result.type,
+                        smooth: true,
+                        smoothMonotone: 'x',
+                        data: result.init_y_list_2
+                    }]
+                };
+                console.log(option);
+                chart.setOption(option);
+            }
+        });
+    }
+
+    function getDynamicData() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:5000/dynamicData",
+            dataType: "json",
+            success: function (result) {
+                if (option.series[0].data.length == 10) { // 初始时列表内数据量不多，故到10再shift掉
+                    option.series[0].data.shift(); // 删除头部数据
+                }
+                option.series[0].data.push(result.value[0]); // 压入新数据
+                console.log(option.series[0].data.length);
+                if (option.series[1].data.length == 10) {
+                    option.series[1].data.shift();
+                }
+                option.series[1].data.push(result.value[1]);
+
+                if (option.series[2].data.length == 10) {
+                    option.series[2].data.shift();
+                }
+                option.series[2].data.push(result.value[2]);
+
+                if (option.xAxis.data.length == 10) {
+                    option.xAxis.data.shift();
+                }
+                option.xAxis.data.push(result.time);
+                chart.setOption(option);
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

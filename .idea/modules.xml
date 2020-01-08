@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BilibiliDataAnalysis.iml" filepath="$PROJECT_DIR$/BilibiliDataAnalysis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FlinkAnalysis/FlinkAnalysis.iml" filepath="$PROJECT_DIR$/FlinkAnalysis/FlinkAnalysis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PythonWorm/PythonWorm.iml" filepath="$PROJECT_DIR$/PythonWorm/PythonWorm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pyecharts/pyecharts.iml" filepath="$PROJECT_DIR$/pyecharts/pyecharts.iml" />
+    </modules>
+  </component>
+</project>

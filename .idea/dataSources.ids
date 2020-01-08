@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="Mix" uuid="13ee9671-1e1d-4f14-8d54-7d54205d2111">
+    <database-info product="MySQL" version="5.5.5-10.4.6-MariaDB" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.47 ( Revision: fe1903b1ecb4a96a917f7ed3190d80c049b1de29 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
+    <database-model serializer="dbm" rdbms="MYSQL" format-version="2.4">
+      <schema id="1" name="ck"/>
+      <table id="2" parent="1" name="Users"/>
+      <table id="3" parent="1" name="Trips"/>
+      <table id="4" parent="1" name="Employee"/>
+      <table id="5" parent="1" name="Department"/>
+      <column id="6" parent="2" name="Users_Id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="7" parent="2" name="Banned">
+        <data-type>varchar(5)</data-type>
+        <default-expression>&apos;NULL&apos;</default-expression>
+      </column>
+      <column id="8" parent="2" name="Role">
+        <data-type>char(6)</data-type>
+        <default-expression>&apos;NULL&apos;</default-expression>
+      </column>
+      <key id="9" parent="2" name="PRIMARY">
+        <columns>Users_Id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="10" parent="3" name="Id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="11" parent="3" name="Client_Id">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;NULL&apos;</default-expression>
+      </column>
+      <column id="12" parent="3" name="Driver_Id">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;NULL&apos;</default-expression>
+      </column>
+      <column id="13" parent="3" name="City_Id">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;NULL&apos;</default-expression>
+      </column>
+      <column id="14" parent="3" name="Status">
+        <data-type>varchar(30)</data-type>
+        <default-expression>&apos;NULL&apos;</default-expression>
+      </column>
+      <column id="15" parent="3" name="Request_at">
+        <data-type>char(10)</data-type>
+        <default-expression>&apos;NULL&apos;</default-expression>
+      </column>
+      <key id="16" parent="3" name="PRIMARY">
+        <columns>Id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="17" parent="4" name="Id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="18" parent="4" name="Name">
+        <data-type>varchar(10)</data-type>
+        <default-expression>&apos;NULL&apos;</default-expression>
+      </column>
+      <column id="19" parent="4" name="Salary">
+        <data-type>bigint(20)</data-type>
+        <default-expression>&apos;NULL&apos;</default-expression>
+      </column>
+      <column id="20" parent="4" name="DepartmentId">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;NULL&apos;</default-expression>
+      </column>
+      <key id="21" parent="4" name="PRIMARY">
+        <columns>Id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="22" parent="5" name="Id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="23" parent="5" name="Name">
+        <data-type>varchar(10)</data-type>
+        <default-expression>&apos;NULL&apos;</default-expression>
+      </column>
+      <key id="24" parent="5" name="PRIMARY">
+        <columns>Id</columns>
+        <primary>1</primary>
+      </key>
+    </database-model>
+  </data-source>
+</component>

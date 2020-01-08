@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Awesome-pyecharts</title>
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+
+</head>
+<body>
+<!-- 长宽只能在这里设置 -->
+<div id="bar" style="width:1200px; height:700px;"></div>
+<script>
+    var chart = echarts.init(document.getElementById('bar'), 'white', {renderer: 'canvas'});
+    var option = {};
+    var itemStyle = {
+        opacity: 0.8,
+        shadowBlur: 2,
+        shadowOffsetX: 0,
+        shadowOffsetY: 0,
+        shadowColor: 'rgba(255, 255, 255, 0.6)'
+    };
+
+    $(
+            function () {
+                fetchData(chart);
+                setInterval(getDynamicData, 2000);
+            }
+    );
+
+    function fetchData() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:5000/dynamicData",
+            dataType: "json",
+            success: function (result) {
+                option = {
+                    title: {
+                        text: "弹幕字数时间图",
+                        subtext: "数据来源Bilibili",
+                        left: "2%",
+                        top: "3%",
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    },
+                    backgroundColor: '#404a59',
+                    color: ['#dd4444'],
+                    legend: {
+                        top: '3%',
+                        data: [result.name],
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 16
+                        }
+                    },
+                    // 整体图像在div中位置
+                    grid: {
+                        left: '5%',
+                        right: 150,
+                        top: '18%',
+                        bottom: '10%'
+                    },
+                    xAxis: {
+                        type: 'value',
+                        name: '视频时间流',
+                        nameGap: 16,
+                        nameTextStyle: {
+                            color: '#fff',
+                            fontSize: 16
+                        },
+                        max: 1,
+                        splitLine: {
+                            show: false
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#eee'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        name: '弹幕日期流',
+                        scale: true,
+                        nameLocation: 'center',
+                        nameTextStyle: {
+//                            verticalAlign: 'middle',
+                            align: 'center',
+                            color: '#fff',
+                            fontSize: 16
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#eee'
+                            }
+                        },
+                        axisLabel: {
+                            show: false // 不显示坐标刻度值
+                        },
+                        splitLine: {
+                            show: false
+                        }
+                    },
+
+                    visualMap: {
+                        text: ['弹幕字数'],
+                        min: 0,
+                        itemSymbol: 'triangle',
+                        max: 30,
+                        left: '90%',
+                        top: '12%',
+                        splitNumber: 5,
+                        color: ['#d94e5d','#eac736','#50a3ba'],
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    },
+                    series: [
+                        {
+                            name: result.name,
+                            type: 'scatter',
+                            itemStyle: itemStyle,
+                            symbolSize: 12,
+                            data: result.value
+                        }
+                    ]
+                };
+                chart.setOption(option);
+            }
+        });
+    }
+
+    function getDynamicData() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:5000/dynamicData",
+            dataType: "json",
+            success: function (result) {
+                option.series[0].data.push(result.value);
+                chart.setOption(option);
+            }
+        });
+    }
+
+
+</script>
+</body>
+</html>
