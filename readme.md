@@ -1,22 +1,29 @@
-# 读我
+# Readme
 
 ## 项目介绍
 
 ### 啰嗦
 
 本项目基于Bilibili的分开信息，实现需求的主要模块为[Flink](https://flink.apache.org/) + [eCharts](https://www.echartsjs.com/zh/option.html)，点击直达官网。
-项目代码主要是Scala + Python实现，建议学习大数据的最好掌握Java或Scala，资料丰富些。
+项目代码主要是Scala + Python实现，建议学习大数据的最好掌握Java或Scala，学习资料丰富些。
 
 [GitHub地址](https://github.com/KelvinChi/BilibiliPublicDataAnalysis)
 
 ### 项目架构
 
-一图胜千言
+#### 项目环境版本信息
+
+| Scala | Python | Flink | Flume | Kafka | CentOS | Redis |
+|-:| :-: | :-: | :-: | :-: | :-: | :-: |
+| 2.11.8 | 3.7.3 | 1.7.2 | 1.7.0 | 0.11.0.2 | 6.8 | 2.8.17 |
+
+#### 一图胜千言
 
 ![项目流程](https://upload-images.jianshu.io/upload_images/2083763-453b33fcacaa685f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 静态图表
-来看看效果，先上个静态的，这个简单需求完全可以不用框架实现，但我还是用了Flink，也好让初学这个框架的盆友适应一小步。
+
+来看看效果，先上个静态的，这个简单需求完全可以不用框架实现，但已奉上粗漏的Flink代码，让大佬们适应一小下。
 
 ![弹幕时间分布](https://upload-images.jianshu.io/upload_images/2083763-1a6995aa46791004.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -35,7 +42,9 @@
 
 ### 启动顺序
 1. Flume、Kafka启动顺序
-   - 首先需要启动ZooKeeper集群，然后是Kafka服务、Flume
+   - 首先需要启动集群ZooKeeper，然后是Kafka服务、Flume
+2. 启动Redis
+   - 爬虫使用了Redis存储视频一些静态信息
 2. 启动爬虫
    - 爬虫文件为PythonWorm/bilibiliWorm.py
 3. 启动Flink
@@ -76,3 +85,5 @@
   - 基于网页服务提供的，因为没法大量申请，所以放弃使用了。
 - [Python操作Redis数据库](https://www.cnblogs.com/cnkai/p/7642787.html)
 - [利用 Flask 动态展示 Pyecharts 图表数据的几种方法](https://www.jianshu.com/p/6910712e9b64)
+- [解决github图片不显示的问题](https://blog.csdn.net/qq_38232598/article/details/91346392)
+   - 我遇到的小问题，供遇同问题的大佬参考
