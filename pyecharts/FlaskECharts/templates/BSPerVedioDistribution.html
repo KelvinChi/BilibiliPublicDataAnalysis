@@ -13,6 +13,7 @@
 <script>
     var chart = echarts.init(document.getElementById('bar'), 'white', {renderer: 'canvas'});
     var option = {};
+    // 设置各点的投影属性
     var itemStyle = {
         opacity: 0.8,
         shadowBlur: 2,
@@ -20,6 +21,12 @@
         shadowOffsetY: 0,
         shadowColor: 'rgba(255, 255, 255, 0.6)'
     };
+    // 鼠标触发面板schema
+    var schema = [
+        {name: '评论时间', index: 0},
+        {name: '评论字数', index: 1},
+        {name: '评论内容', index: 2}
+    ];
 
     $(
             function () {
@@ -27,6 +34,21 @@
                 setInterval(getDynamicData, 2000);
             }
     );
+
+    // 时间格式转换
+    function formatDate(datetime) {
+        var date = new Date(parseInt(datetime) * 1000);
+        var year = date.getFullYear(),
+            month = ("0" + (date.getMonth() + 1)).slice(-2),
+            sdate = ("0" + date.getDate()).slice(-2),
+            hour = ("0" + date.getHours()).slice(-2),
+            minute = ("0" + date.getMinutes()).slice(-2),
+            second = ("0" + date.getSeconds()).slice(-2);
+        // 拼接
+        var result = year + "-" + month + "-" + sdate + " " + hour + ":" + minute + ":" + second;
+        // 返回
+        return result;
+    }
 
     function fetchData() {
         $.ajax({
@@ -46,6 +68,20 @@
                     },
                     backgroundColor: '#404a59',
                     color: ['#dd4444'],
+                    // 鼠标触发信息显示
+                    tooltip: {
+                        padding: 10,
+                        backgroundColor: '#222',
+                        borderColor: '#777',
+                        borderWidth: 1,
+                        formatter: function (obj) {
+                            var value = obj.value;
+                            return schema[0].name + '：' + formatDate(value[1]) + '<br>'
+                                    + schema[1].name + '：' + value[3] + '<br>'
+                                    + schema[2].name + '：' + value[4] + '<br>';
+                        }
+                    },
+                    // 视频编号显示
                     legend: {
                         top: '3%',
                         data: [result.name],
@@ -105,13 +141,18 @@
 
                     visualMap: {
                         text: ['弹幕字数'],
+                        // 默认有text不显示侧标签，需要手动开启
+                        showLabel: true,
+                        // 默认取最后一个维度数据
+                        dimension: 3,
                         min: 0,
                         itemSymbol: 'triangle',
-                        max: 30,
+                        // 注意超过设定值会不显示
+                        max: 40,
                         left: '90%',
                         top: '12%',
                         splitNumber: 5,
-                        color: ['#d94e5d','#eac736','#50a3ba'],
+                        color: ['#d94e5d', '#eac736', '#50a3ba'],
                         textStyle: {
                             color: '#fff'
                         }
@@ -127,6 +168,7 @@
                     ]
                 };
                 chart.setOption(option);
+                console.log(option);
             }
         });
     }

@@ -37,7 +37,7 @@ object BSPerVedioDistribution {
     // 如果使用EventTime则弹幕数据低达时并不会触发写入，需要等下一条且间隔时间超过设定窗口时间才会触发
     // 针对类似实时性要求不是非常高的应用，还是使用ProcessingTime
     // 对于本地数据处理，还是需要用EventTime实现数据的时序
-    //    env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
+    //        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
     env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime)
 
     val stream = env.addSource(new FlinkKafkaConsumer[String]("topic-BSPVD", new SimpleStringSchema(), properties))
@@ -58,6 +58,7 @@ object BSPerVedioDistribution {
       .filter(_.aid == aid)
 
     val aggStream = stream
+      // 使用本地数据时取消注释
       //      .assignAscendingTimestamps(_.timestamp * 1000) // 踩坑，时间戳的指定位置在类似的分键数据中要在filter之后
       .timeWindowAll(Time.seconds(1)) // 实时数据时每秒刷新一次
       .process(new BSData()).setParallelism(1)
@@ -79,7 +80,7 @@ object BSPerVedioDistribution {
         count += 1
         val item = iter.next()
         val finalString = (item.bsTime / vedioTime).formatted("%.2f") +
-          "," + item.timestamp + "," + item.aid + "," + item.content.length + "\n"
+          "," + item.timestamp + "," + item.aid + "," + item.content.length + "," + item.content + "\n"
         println(finalString)
         BSPerDayDistribution.writeToFile(bsPerVedioFile, finalString)
       }

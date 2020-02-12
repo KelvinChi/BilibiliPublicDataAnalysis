@@ -35,11 +35,12 @@ def update_data():
         exit()
 
 
+# 准备首次显示所需数据
 def prepare_init_data(path):
     result = []
     with open(path, 'r') as f:
         for i in f.readlines():
-            result.append(i.strip().split(","))
+            result.append(i.strip().split(",", 4)) # 将行分为5段
     return result, result[0][2]
 
 
